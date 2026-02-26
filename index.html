@@ -12,8 +12,12 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        .fade-in { animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .fade-in { animation: fadeIn 0.3s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
+        
+        /* Hide scrollbar but keep functionality for modal */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
 <body class="bg-white text-[#000000] selection:bg-[#FF5757] selection:text-white">
@@ -68,7 +72,20 @@
             useEffect(() => {
                 const handleScroll = () => setScrolled(window.scrollY > 50);
                 window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
+                
+                // ESC key handler
+                const handleEsc = (event) => {
+                    if (event.key === 'Escape') {
+                        setShowApplication(false);
+                        setSelectedCase(null);
+                    }
+                };
+                window.addEventListener('keydown', handleEsc);
+
+                return () => {
+                    window.removeEventListener('scroll', handleScroll);
+                    window.removeEventListener('keydown', handleEsc);
+                };
             }, []);
 
             const navLinks = [
@@ -193,7 +210,7 @@
                                 <div className="group relative bg-[#111111] text-white p-8 md:p-12 rounded-[50px] transition-all overflow-hidden shadow-2xl">
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF5757] rounded-bl-[100px] opacity-20" />
                                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-                                        <div><h3 className="text-[40px] leading-[40px] font-[800] mb-2 text-white tracking-tight uppercase">Nuttet Baby</h3><p className="text-[#FF5757] font-bold text-lg">Grundlægger & Head of E-commerce</p></div>
+                                        <div><h3 className="text-[40px] leading-[40px] font-[800] mb-2 text-white tracking-tight">Nuttet Baby</h3><p className="text-[#FF5757] font-bold text-lg">Grundlægger & Head of E-commerce</p></div>
                                         <div className="text-[13px] font-bold bg-white/10 px-6 py-2 rounded-full border border-white/10 shadow-sm uppercase tracking-widest">2022 - 2026</div>
                                     </div>
                                     <p className="text-[17px] leading-[28.9px] font-[400] text-gray-300">Etableret min egen fra 0 til 7-cifret vækst. Jeg har stået for alt - fra den tekniske Shopify-konfiguration til logistik og sourcing. Denne "holistiske forretningsforståelse" gør mig i stand til at se sammenhængen mellem indkøbspriser og marketingbudgetter.</p>
@@ -213,7 +230,7 @@
                                 {cases.map((c) => (
                                     <div key={c.id} onClick={() => setSelectedCase(c)} className={`cursor-pointer group relative p-10 rounded-[50px] flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] ${c.id === 2 ? 'bg-[#111111] text-white shadow-2xl' : 'bg-white text-[#111111] border border-gray-100 shadow-sm'}`}>
                                         <div className="absolute top-8 right-8 text-[#FF5757] opacity-0 group-hover:opacity-100 transition-opacity"><PlusCircle /></div>
-                                        <div><div className="text-[#FF5757] font-[800] text-6xl mb-4 tracking-tighter">{c.growth}</div><h4 className="text-[40px] leading-[40px] font-[800] mb-4 uppercase tracking-wider">{c.title}</h4><p className={`${c.id === 2 ? 'text-gray-400' : 'text-gray-600'} text-[17px] leading-[28.9px] font-[400]`}>{c.summary}</p></div>
+                                        <div><div className="text-[#FF5757] font-[800] text-6xl mb-4 tracking-tighter">{c.growth}</div><h4 className="text-[40px] leading-[40px] font-[800] mb-4">{c.title}</h4><p className={`${c.id === 2 ? 'text-gray-400' : 'text-gray-600'} text-[17px] leading-[28.9px] font-[400]`}>{c.summary}</p></div>
                                         <div className="mt-8 flex items-center gap-2 font-[400] text-[15px] leading-[25.5px] lowercase tracking-[0.1em] text-[#FF5757]">se detaljer <ArrowRight /></div>
                                     </div>
                                 ))}
@@ -236,7 +253,7 @@
                                 </div>
                                 <div className="md:w-1/2 bg-gray-50 rounded-[60px] p-4 aspect-square">
                                     <div className="w-full h-full bg-[#111111] rounded-[50px] flex items-center justify-center p-12 text-center shadow-xl">
-                                        <p className="text-white text-3xl font-[800] italic leading-tight tracking-tight">"Det handler ikke om at bruge flest penge, men om at bruge dem <span style={{ color: BRAND_COLOR }}>rigtigt</span>."</p>
+                                        <p className="text-white text-3xl font-[800] italic leading-tight">"Det handler ikke om at bruge flest penge, men om at bruge dem <span style={{ color: BRAND_COLOR }}>rigtigt</span>."</p>
                                     </div>
                                 </div>
                             </div>
@@ -245,11 +262,11 @@
 
                     {/* Case Modal */}
                     {selectedCase && (
-                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md fade-in">
-                            <div className="bg-white w-full max-w-2xl rounded-[60px] p-8 md:p-12 relative overflow-hidden shadow-2xl">
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-black/70 backdrop-blur-md fade-in" onClick={() => setSelectedCase(null)}>
+                            <div className="bg-white w-full max-w-2xl rounded-[60px] p-8 md:p-12 relative overflow-hidden shadow-2xl" onClick={e => e.stopPropagation()}>
                                 <button onClick={() => setSelectedCase(null)} className="absolute top-8 right-8 w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#FF5757] hover:text-white transition-colors"><X /></button>
                                 <div className="inline-block text-[#FF5757] font-[800] text-5xl mb-4">{selectedCase.growth}</div>
-                                <h3 className="text-[40px] leading-[40px] font-[800] mb-4 tracking-tight uppercase">{selectedCase.title}</h3>
+                                <h3 className="text-[40px] leading-[40px] font-[800] mb-4 tracking-tight">{selectedCase.title}</h3>
                                 <div className="flex flex-wrap gap-2 mb-8">{selectedCase.tags.map(t => (<span key={t} className="px-4 py-1 bg-gray-100 rounded-full text-[11px] font-[800] uppercase text-gray-500 tracking-wider">{t}</span>))}</div>
                                 <div className="space-y-6 text-[17px] leading-[28.9px] font-[400] text-gray-600"><p className="font-bold text-[#111111]">{selectedCase.summary}</p><p>{selectedCase.details}</p></div>
                                 <div className="mt-12"><a href="mailto:mikkelemilfrost@gmail.com" className="bg-[#111111] text-white px-10 py-5 rounded-full font-[400] text-[15px] leading-[25.5px] inline-flex items-center gap-2 hover:bg-black transition-all">Hør hvordan jeg gjorde <ExternalLink /></a></div>
@@ -259,23 +276,32 @@
 
                     {/* Application Modal */}
                     {showApplication && (
-                        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md overflow-y-auto fade-in">
-                            <div className="bg-white w-full max-w-3xl rounded-[40px] md:rounded-[60px] p-8 md:p-16 relative shadow-2xl my-8">
-                                <button onClick={() => setShowApplication(false)} className="absolute top-8 right-8 w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#FF5757] hover:text-white transition-colors"><X /></button>
-                                <div className="mb-10"><div className="inline-block bg-[#FF5757] text-white px-4 py-1 rounded-full text-[11px] font-[800] uppercase tracking-[0.2em] mb-6">Ansøgning</div><h2 className="text-[40px] leading-[40px] font-[800] mb-4 tracking-tight">Motiveret ansøgning til Growbix</h2><p className="text-[17px] font-[800] text-[#FF5757] uppercase tracking-wider">Paid Search Specialist</p></div>
-                                <div className="space-y-6 text-[17px] leading-[28.9px] text-gray-600 font-[400]">
-                                    <p><strong>Kære Growbix team,</strong></p>
-                                    <p>Jeg har længe fulgt jeres bureau på LinkedIn, og jeres dedikation til at skabe "fremtidens vindere" resonerer 100% med mit eget drive. Jeg vil gerne søge stillingen som Paid Search Specialist, fordi jeg ikke bare vil eksekvere Google Ads, men fordi jeg vil være med til at bygge det fundament, jeres kunders vækst hviler på.</p>
-                                    <p>Gennem min tid hos <strong>Adentify</strong> har jeg haft det fulde ansvar for +30 kunders performance marketing og digitale tilstedeværelse ad gangen. Jeg er vant til at sidde med budgetter på over 500.000 kr./md., hvor hver kanal skal spille sammen. Min tekniske ballast med server-side tracking gennem Reaktion sikrer, at jeg altid træffer beslutninger baseret på præcis data – præcis som I prioriterer hos Growbix.</p>
-                                    <p>Men det, der adskiller mig, er min erfaring som grundlægger af <strong>Nuttet Baby</strong>. Her har jeg selv bygget en 7-cifret forretning fra bunden. Det har givet mig en holistisk forretningsforståelse, hvor jeg ser Google Ads som en del af et større økosystem af logistik, indkøbspriser og kunderejser. Jeg rådgiver derfor ikke kun om CRO, men også om POAS og profitabilitet gennem andre tiltag end de rent marketingmæssige.</p>
-                                    <p>Jeg er ambitiøs og ser mig selv vokse ind i en Senior-rolle hos jer rigtig hurtigt. I min nuværende stilling føler jeg desværre, at min faglige udvikling er gået lidt i stå, og jeg ser derfor Growbix som det ideelle sted at tage det næste skridt, da I virker som nogle utroligt skarpe hoveder, jeg kan lære meget af.</p>
-                                    <p>Jeg trives i et dynamisk miljø med højt til loftet og plads til humor, hvor der er en god balance mellem arbejde og fritid – også selvom jeg bruger en stor del af min fritid på at lære nye ting inden for AI, marketing og automation. I øjeblikket nørder jeg ekstremt meget med Claude og Gemini, og jeg vil elske at lære fra mig og sparre med jer omkring dette.</p>
-                                    <p>Jeg ser frem til at høre fra jer og uddybe, hvordan jeg kan bidrage til jeres team.</p>
-                                    <p className="font-[800] text-black pt-4 italic">De bedste hilsner,<br />Mikkel E. Frost</p>
-                                </div>
-                                <div className="mt-12 flex flex-col md:flex-row items-center justify-center gap-4">
-                                    <button onClick={() => setShowApplication(false)} className="bg-[#111111] text-white px-10 py-5 rounded-full font-[800] text-[15px] leading-[25.5px] hover:bg-black transition-all w-full md:w-auto">Luk ansøgning</button>
-                                    <a href="mailto:mikkelemilfrost@gmail.com" className="bg-[#FF5757] text-white px-10 py-5 rounded-full font-[800] text-[15px] leading-[25.5px] hover:opacity-90 transition-all shadow-lg shadow-red-200 flex items-center justify-center gap-2 w-full md:w-auto">Kontakt mig på mail her <Mail size={18} /></a>
+                        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md fade-in" onClick={() => setShowApplication(false)}>
+                            <div className="bg-white w-full max-w-3xl max-h-[90vh] overflow-hidden rounded-[40px] md:rounded-[60px] relative shadow-2xl flex flex-col" onClick={e => e.stopPropagation()}>
+                                <button onClick={() => setShowApplication(false)} className="absolute top-8 right-8 z-20 w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#FF5757] hover:text-white transition-colors"><X /></button>
+                                
+                                <div className="p-8 md:p-16 overflow-y-auto no-scrollbar">
+                                    <div className="mb-10">
+                                        <div className="inline-block bg-[#FF5757] text-white px-4 py-1 rounded-full text-[11px] font-[800] uppercase tracking-[0.2em] mb-6">Ansøgning</div>
+                                        <h2 className="text-[40px] leading-[40px] font-[800] mb-4 tracking-tight">Motiveret ansøgning til Growbix</h2>
+                                        <p className="text-[17px] font-[800] text-[#FF5757] uppercase tracking-wider">Paid Search Specialist</p>
+                                    </div>
+
+                                    <div className="space-y-6 text-[17px] leading-[28.9px] text-gray-600 font-[400]">
+                                        <p><strong>Kære Growbix team,</strong></p>
+                                        <p>Jeg har længe fulgt jeres bureau på LinkedIn, og jeres dedikation til at skabe "fremtidens vindere" resonerer 100% med mit eget drive. Jeg vil gerne søge stillingen som Paid Search Specialist, fordi jeg ikke bare vil eksekvere Google Ads, men fordi jeg vil være med til at bygge det fundament, jeres kunders vækst hviler på.</p>
+                                        <p>Gennem min tid hos <strong>Adentify</strong> har jeg haft det fulde ansvar for +30 kunders performance marketing og digitale tilstedeværelse ad gangen. Jeg er vant til at sidde med budgetter på over 500.000 kr./md., hvor hver kanal skal spille sammen. Min tekniske ballast med server-side tracking gennem Reaktion sikrer, at jeg altid træffer beslutninger baseret på præcis data – præcis som I prioriterer hos Growbix.</p>
+                                        <p>Men det, der adskiller mig, er min erfaring som grundlægger af <strong>Nuttet Baby</strong>. Her har jeg selv bygget en 7-cifret forretning fra bunden. Det har givet mig en holistisk forretningsforståelse, hvor jeg ser Google Ads som en del af et større økosystem af logistik, indkøbspriser og kunderejser. Jeg rådgiver derfor ikke kun om CRO, men også om POAS og profitabilitet gennem andre tiltag end de rent marketingmæssige.</p>
+                                        <p>Jeg er ambitiøs og ser mig selv vokse ind i en Senior-rolle hos jer rigtig hurtigt. I min nuværende stilling føler jeg desværre, at min faglige udvikling er gået lidt i stå, og jeg ser derfor Growbix som det ideelle sted at tage det næste skridt, da I virker som nogle utroligt skarpe hoveder, jeg kan lære meget af.</p>
+                                        <p>Jeg trives i et dynamisk miljø med højt til loftet og plads til humor, hvor der er en god balance mellem arbejde og fritid – også selvom jeg bruger en stor del af min fritid på at lære nye ting inden for AI, marketing og automation. I øjeblikket nørder jeg ekstremt meget med Claude og Gemini, og jeg vil elske at lære fra mig og sparre med jer omkring dette.</p>
+                                        <p>Jeg ser frem til at høre fra jer og uddybe, hvordan jeg kan bidrage til jeres team.</p>
+                                        <p className="font-[800] text-black pt-4 italic">De bedste hilsner,<br />Mikkel E. Frost</p>
+                                    </div>
+
+                                    <div className="mt-12 flex flex-col md:flex-row items-center justify-center gap-4">
+                                        <button onClick={() => setShowApplication(false)} className="bg-[#111111] text-white px-10 py-5 rounded-full font-[800] text-[15px] leading-[25.5px] hover:bg-black transition-all w-full md:w-auto">Luk ansøgning</button>
+                                        <a href="mailto:mikkelemilfrost@gmail.com" className="bg-[#FF5757] text-white px-10 py-5 rounded-full font-[800] text-[15px] leading-[25.5px] hover:opacity-90 transition-all shadow-lg shadow-red-200 flex items-center justify-center gap-2 w-full md:w-auto">Kontakt mig på mail her <Mail size={18} /></a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
