@@ -99,9 +99,7 @@
                 { name: 'Shopify', icon: 'https://www.vectorlogo.zone/logos/shopify/shopify-icon.svg' },
                 { name: 'Meta', icon: 'https://www.vectorlogo.zone/logos/facebook/facebook-official.svg' },
                 { name: 'Google', icon: 'https://www.vectorlogo.zone/logos/google_ads/google_ads-icon.svg' },
-                { name: 'TikTok', icon: 'https://www.vectorlogo.zone/logos/tiktok/tiktok-icon.svg' },
-                { name: 'Klaviyo', icon: 'https://www.vectorlogo.zone/logos/klaviyo/klaviyo-icon.svg' },
-                { name: 'SEO', icon: 'https://www.vectorlogo.zone/logos/google_search_console/google_search_console-icon.svg' }
+                { name: 'TikTok', icon: 'https://www.vectorlogo.zone/logos/tiktok/tiktok-icon.svg' }
             ];
 
             const cases = [
@@ -210,7 +208,7 @@
                                 <div className="group relative bg-[#111111] text-white p-8 md:p-12 rounded-[50px] transition-all overflow-hidden shadow-2xl">
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF5757] rounded-bl-[100px] opacity-20" />
                                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-                                        <div><h3 className="text-[40px] leading-[40px] font-[800] mb-2 text-white tracking-tight">Nuttet Baby</h3><p className="text-[#FF5757] font-bold text-lg">Grundlægger & Head of E-commerce</p></div>
+                                        <div><h3 className="text-[40px] leading-[40px] font-[800] mb-2 text-white tracking-tight uppercase">Nuttet Baby</h3><p className="text-[#FF5757] font-bold text-lg">Grundlægger & Head of E-commerce</p></div>
                                         <div className="text-[13px] font-bold bg-white/10 px-6 py-2 rounded-full border border-white/10 shadow-sm uppercase tracking-widest">2022 - 2026</div>
                                     </div>
                                     <p className="text-[17px] leading-[28.9px] font-[400] text-gray-300">Etableret min egen fra 0 til 7-cifret vækst. Jeg har stået for alt - fra den tekniske Shopify-konfiguration til logistik og sourcing. Denne "holistiske forretningsforståelse" gør mig i stand til at se sammenhængen mellem indkøbspriser og marketingbudgetter.</p>
@@ -273,7 +271,7 @@
                             <div className="bg-white w-full max-w-2xl rounded-[60px] p-8 md:p-12 relative overflow-hidden shadow-2xl" onClick={e => e.stopPropagation()}>
                                 <button onClick={() => setSelectedCase(null)} className="absolute top-8 right-8 w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#FF5757] hover:text-white transition-colors"><X /></button>
                                 <div className="inline-block text-[#FF5757] font-[800] text-5xl mb-4">{selectedCase.growth}</div>
-                                <h3 className="text-[40px] leading-[40px] font-[800] mb-4 tracking-tight">{selectedCase.title}</h3>
+                                <h3 className="text-[40px] leading-[40px] font-[800] mb-4 tracking-tight uppercase">{selectedCase.title}</h3>
                                 <div className="flex flex-wrap gap-2 mb-8">{selectedCase.tags.map(t => (<span key={t} className="px-4 py-1 bg-gray-100 rounded-full text-[11px] font-[800] uppercase text-gray-500 tracking-wider">{t}</span>))}</div>
                                 <div className="space-y-6 text-[17px] leading-[28.9px] font-[400] text-gray-600"><p className="font-bold text-[#111111]">{selectedCase.summary}</p><p>{selectedCase.details}</p></div>
                                 <div className="mt-12"><a href="mailto:mikkelemilfrost@gmail.com" className="bg-[#111111] text-white px-10 py-5 rounded-full font-[400] text-[15px] leading-[25.5px] inline-flex items-center gap-2 hover:bg-black transition-all">Hør hvordan jeg gjorde <ExternalLink /></a></div>
