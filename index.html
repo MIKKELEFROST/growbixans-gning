@@ -210,10 +210,17 @@
                                 <div className="group relative bg-[#111111] text-white p-8 md:p-12 rounded-[50px] transition-all overflow-hidden shadow-2xl">
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-[#FF5757] rounded-bl-[100px] opacity-20" />
                                     <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-                                        <div><h3 className="text-[40px] leading-[40px] font-[800] mb-2 text-white tracking-tight uppercase">Nuttet Baby</h3><p className="text-[#FF5757] font-bold text-lg">Grundlægger & Head of E-commerce</p></div>
+                                        <div><h3 className="text-[40px] leading-[40px] font-[800] mb-2 text-white tracking-tight">Nuttet Baby</h3><p className="text-[#FF5757] font-bold text-lg">Grundlægger & Head of E-commerce</p></div>
                                         <div className="text-[13px] font-bold bg-white/10 px-6 py-2 rounded-full border border-white/10 shadow-sm uppercase tracking-widest">2022 - 2026</div>
                                     </div>
                                     <p className="text-[17px] leading-[28.9px] font-[400] text-gray-300">Etableret min egen fra 0 til 7-cifret vækst. Jeg har stået for alt - fra den tekniske Shopify-konfiguration til logistik og sourcing. Denne "holistiske forretningsforståelse" gør mig i stand til at se sammenhængen mellem indkøbspriser og marketingbudgetter.</p>
+                                </div>
+                                <div className="group relative bg-[#F9F9F9] p-8 md:p-12 rounded-[50px] border border-transparent hover:border-[#FF5757]/20 transition-all">
+                                    <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+                                        <div><h3 className="text-[40px] leading-[40px] font-[800] mb-2 tracking-tight">Online Marketing Nu</h3><p className="text-[#FF5757] font-bold text-lg">Selvstændig Marketing Konsulent</p></div>
+                                        <div className="text-[13px] font-bold bg-white px-6 py-2 rounded-full border border-gray-100 shadow-sm uppercase tracking-widest">Sept 2019 - Maj 2025</div>
+                                    </div>
+                                    <p className="text-[17px] leading-[28.9px] font-[400] text-[#000000] opacity-80">Rådgivning af SMV'er om digital vækst. Blandt andet skaleret AYAVA fra 190.000 kr. til 1.000.000 kr. i månedlig omsætning på to måneder og hævet konverteringsraten for By Minella fra 2% til 5,5% via målrettet CRO og performance marketing.</p>
                                 </div>
                             </div>
                         </div>
@@ -253,7 +260,7 @@
                                 </div>
                                 <div className="md:w-1/2 bg-gray-50 rounded-[60px] p-4 aspect-square">
                                     <div className="w-full h-full bg-[#111111] rounded-[50px] flex items-center justify-center p-12 text-center shadow-xl">
-                                        <p className="text-white text-3xl font-[800] italic leading-tight uppercase tracking-tight">"Det handler ikke om at bruge flest penge, men om at bruge dem <span style={{ color: BRAND_COLOR }}>rigtigt</span>."</p>
+                                        <p className="text-white text-3xl font-[800] italic leading-tight">"Det handler ikke om at bruge flest penge, men om at bruge dem <span style={{ color: BRAND_COLOR }}>rigtigt</span>."</p>
                                     </div>
                                 </div>
                             </div>
@@ -266,7 +273,7 @@
                             <div className="bg-white w-full max-w-2xl rounded-[60px] p-8 md:p-12 relative overflow-hidden shadow-2xl" onClick={e => e.stopPropagation()}>
                                 <button onClick={() => setSelectedCase(null)} className="absolute top-8 right-8 w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center hover:bg-[#FF5757] hover:text-white transition-colors"><X /></button>
                                 <div className="inline-block text-[#FF5757] font-[800] text-5xl mb-4">{selectedCase.growth}</div>
-                                <h3 className="text-[40px] leading-[40px] font-[800] mb-4 tracking-tight uppercase">{selectedCase.title}</h3>
+                                <h3 className="text-[40px] leading-[40px] font-[800] mb-4 tracking-tight">{selectedCase.title}</h3>
                                 <div className="flex flex-wrap gap-2 mb-8">{selectedCase.tags.map(t => (<span key={t} className="px-4 py-1 bg-gray-100 rounded-full text-[11px] font-[800] uppercase text-gray-500 tracking-wider">{t}</span>))}</div>
                                 <div className="space-y-6 text-[17px] leading-[28.9px] font-[400] text-gray-600"><p className="font-bold text-[#111111]">{selectedCase.summary}</p><p>{selectedCase.details}</p></div>
                                 <div className="mt-12"><a href="mailto:mikkelemilfrost@gmail.com" className="bg-[#111111] text-white px-10 py-5 rounded-full font-[400] text-[15px] leading-[25.5px] inline-flex items-center gap-2 hover:bg-black transition-all">Hør hvordan jeg gjorde <ExternalLink /></a></div>
